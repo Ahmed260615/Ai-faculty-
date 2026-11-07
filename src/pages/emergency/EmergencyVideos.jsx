@@ -49,7 +49,7 @@ export default function EmergencyVideos() {
 
   return (
     <>
-      <PageHeader hero="emergency" accent="#D75C5C" title="Emergency Videos" ar="الطوارئ" tabs={EMERGENCY_TABS}
+      <PageHeader eyebrow="Emergency" counter="03 / 07" hero="emergency" accent="#D75C5C" title="Emergency Videos" ar="الطوارئ" tabs={EMERGENCY_TABS}
         subtitle="Video library for emergency situations. All content here is placeholder material and must be replaced with medically reviewed videos."><DemoBadge>Demo content</DemoBadge></PageHeader>
 
       <div className="card mb-6 flex flex-wrap items-end gap-4">

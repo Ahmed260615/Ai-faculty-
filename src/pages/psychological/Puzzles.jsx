@@ -108,7 +108,7 @@ export default function Puzzles() {
 
   return (
     <>
-      <PageHeader hero="psychological" accent="#7A6FB0" title="Puzzles & Entertainment" ar="الألغاز" tabs={PSYCH_TABS}
+      <PageHeader eyebrow="Psychological health" counter="04 / 07" hero="psychological" accent="#7A6FB0" title="Puzzles & Entertainment" ar="الألغاز" tabs={PSYCH_TABS}
         subtitle="Short cognitive challenges to reduce boredom and keep the mind engaged. Scores are stored on this device." />
       {active ? <Session key={active.seed + active.game} {...active} onDone={done} onQuit={() => setActive(null)} /> : (
         <div className="space-y-6">

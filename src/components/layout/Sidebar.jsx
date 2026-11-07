@@ -14,18 +14,19 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onClose }) {
         <div className="flex items-center justify-between gap-2 px-4 h-20 border-b border-white/10 shrink-0">
           <NavLink to="/" onClick={onClose} className="flex items-center gap-3 min-h-touch" aria-label="AstroHealth home">
             <span className="grid h-12 w-12 place-items-center rounded-xl bg-primary"><Orbit size={28} aria-hidden="true" /></span>
-            {!narrow && <span><span className="block text-xl font-bold leading-none">AstroHealth</span><span className="text-sm text-secondary">Crew health monitoring</span></span>}
+            {!narrow && <span><span className="block text-xl font-bold leading-none">AstroHealth</span><span className="block whitespace-nowrap text-sm text-secondary">Crew health monitoring</span></span>}
           </NavLink>
           <button type="button" className="lg:hidden btn-ghost !text-white hover:!bg-white/10" onClick={onClose} aria-label="Close navigation"><X size={26} /></button>
         </div>
         <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1.5">
+          {!narrow && <p className="eyebrow !text-slate-400 px-3 pb-2">Navigation<span className="float-right font-mono">01 — 07</span></p>}
           {NAV.map((n) => {
             const Icon = n.icon;
             const section = n.children ? pathname.startsWith(n.to) : false;
             return (
               <div key={n.to}>
                 <NavLink to={n.to} end={n.end} onClick={onClose} title={narrow ? n.en : undefined} aria-label={narrow ? n.en : undefined}
-                  className={({ isActive }) => `flex items-center gap-3 min-h-[3.5rem] rounded-xl px-3 font-semibold ${isActive || section ? 'bg-primary text-white' : 'text-slate-200 hover:bg-white/10'} ${narrow ? 'justify-center' : ''}`}>
+                  className={({ isActive }) => `flex items-center gap-3 min-h-[3.5rem] rounded-2xl px-3 font-semibold ${isActive || section ? 'bg-primary text-white' : 'text-slate-200 hover:bg-white/10'} ${narrow ? 'justify-center' : ''}`}>
                   <Icon size={26} aria-hidden="true" className="shrink-0" />
                   {!narrow && <span className="min-w-0 leading-tight"><span className="block truncate">{n.en}</span><span lang="ar" dir="rtl" className="arabic block text-sm font-medium opacity-80">{n.ar}</span></span>}
                 </NavLink>

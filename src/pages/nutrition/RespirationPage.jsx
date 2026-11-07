@@ -46,7 +46,7 @@ export default function RespirationPage() {
   const current = l ? worst(['spo2', 'respRate', 'pao2', 'paco2'].map(st)) : 'UNKNOWN';
   return (
     <>
-      <PageHeader hero="nutrition" accent="#2E8F7A" title="Respiration" ar="التنفس" tabs={NUTRITION_TABS}
+      <PageHeader eyebrow="Nutrition & respiration" counter="06 / 07" hero="nutrition" accent="#2E8F7A" title="Respiration" ar="التنفس" tabs={NUTRITION_TABS}
         subtitle="Respiratory monitoring — oxygen saturation, respiratory rate and blood gases. Critical respiratory alerts follow the emergency protocol independently of the AI assessment." />
       <section aria-labelledby="cur" className="mb-6">
         <div className="mb-3 flex flex-wrap items-center gap-3"><h2 id="cur">Current Respiratory Status</h2><RiskBadge level={current} />{USE_MOCK && <DemoBadge />}</div>

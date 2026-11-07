@@ -4,6 +4,7 @@ import { Play, RotateCcw } from 'lucide-react';
 import AssessmentForm from './AssessmentForm';
 import AssessmentLoader from './AssessmentLoader';
 import AIResultCard from './AIResultCard';
+import WorkflowSteps from './WorkflowSteps';
 import CriticalAlert from './CriticalAlert';
 import MeasurementCard from './MeasurementCard';
 import ErrorState from '../ui/ErrorState';
@@ -49,6 +50,7 @@ export default function AssessmentWorkflow({ config, submit, protocol = false, g
 
   return (
     <div className="space-y-6">
+      <WorkflowSteps phase={a.phase} />
       <CriticalAlert items={critical} />
       {before?.({ rows, values })}
       {busy && <AssessmentLoader phase={a.phase} onCancel={a.cancel} />}

@@ -151,7 +151,7 @@ export default function PsychAssessment() {
   const hist = useAsync(getPhqHistory, []);
   return (
     <>
-      <PageHeader hero="psychological" accent="#7A6FB0" title="Psychological Assessment" ar="الاختبار النفسي" tabs={PSYCH_TABS}
+      <PageHeader eyebrow="Psychological health" counter="04 / 07" hero="psychological" accent="#7A6FB0" title="Psychological Assessment" ar="الاختبار النفسي" tabs={PSYCH_TABS}
         subtitle="PHQ-9 depressive-symptom screening (last 2 weeks) and a separate daily mood & stress check-in.">{USE_MOCK && <DemoBadge>Earlier scores are demo data</DemoBadge>}</PageHeader>
       <div className="mb-5 flex flex-wrap gap-2" role="tablist" aria-label="Assessment type">
         <button role="tab" aria-selected={tab === 'phq'} className="chip" aria-pressed={tab === 'phq'} onClick={() => setTab('phq')}>PHQ-9 · last 2 weeks</button>

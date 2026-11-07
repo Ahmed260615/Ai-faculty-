@@ -30,7 +30,7 @@ export default function Reports() {
   ];
   return (
     <>
-      <PageHeader title="History & Reports" ar="التاريخ والتقارير" accent="#3C7896" subtitle="Every generated medical report. Finalised reports are read-only; corrections are stored as new versions." />
+      <PageHeader eyebrow="History & reports" counter="07 / 07" title="History & Reports" ar="التاريخ والتقارير" accent="#3C7896" subtitle="Every generated medical report. Finalised reports are read-only; corrections are stored as new versions." />
       <div className="mb-5 flex flex-wrap gap-2" role="group" aria-label="Report categories">
         <button className="chip" aria-pressed={!f.type} onClick={() => setF({ ...f, type: '' })}>All</button>
         {Object.entries(CATS).map(([k, l]) => <button key={k} className="chip" aria-pressed={f.type === k} onClick={() => setF({ ...f, type: k })}>{l}</button>)}

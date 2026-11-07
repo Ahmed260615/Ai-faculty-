@@ -6,7 +6,7 @@ import { submit } from '../../services/radiation.service';
 export default function RadiationPage() {
   return (
     <>
-      <PageHeader hero="radiation" accent="#B8742F" title="Radiation Test" ar="اختبار الإشعاع"
+      <PageHeader eyebrow="Radiation test" counter="02 / 07" hero="radiation" accent="#B8742F" title="Radiation Test" ar="اختبار الإشعاع"
         subtitle="Assess radiation-related health risk from absorbed and equivalent dose, white blood cell count and DNA damage biomarkers. Laboratory results and AI risk predictions are reported separately." />
       <AssessmentWorkflow config={RADIATION} submit={submit} />
     </>

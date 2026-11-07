@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, Bell, Siren } from 'lucide-react';
+import { Bell, Siren } from 'lucide-react';
 import AstronautProfile from './AstronautProfile';
 import NotificationPanel from '../data/NotificationPanel';
 import DemoBadge from '../ui/DemoBadge';
@@ -21,16 +21,16 @@ export default function TopNavbar({ onMenu }) {
   }, [open]);
   const count = alerts.filter((a) => a.level !== 'NORMAL' || a.kind === 'Upcoming').length;
   return (
-    <header className="sticky top-0 z-20 flex h-20 items-center gap-3 border-b border-line bg-white/95 px-4 backdrop-blur sm:px-6">
-      <button type="button" className="btn-ghost lg:hidden" onClick={onMenu} aria-label="Open navigation" aria-controls="sidebar"><Menu size={28} /></button>
+    <header className="sticky top-0 z-20 flex h-20 items-center gap-2 sm:gap-3 border-b border-line/70 bg-white/85 px-4 backdrop-blur-md sm:px-6">
+      <Link to="/" className="flex items-center gap-2 lg:hidden" aria-label="AstroHealth home"><span className="text-2xl font-bold" style={{ letterSpacing: '-0.05em' }}>astrohealth<span className="text-primary">.</span></span></Link>
       <div className="hidden sm:block leading-tight">
         <p className="font-mono text-2xl font-semibold" aria-label="Current time">{pad(now.getHours())}:{pad(now.getMinutes())}<span className="text-muted text-lg">:{pad(now.getSeconds())}</span></p>
         <p className="text-sm text-muted">Ship time (local)</p>
       </div>
       {USE_MOCK && <DemoBadge className="hidden xl:inline-flex" />}
-      <div className="ml-auto flex items-center gap-2 sm:gap-4">
+      <div className="ml-auto flex items-center gap-2 sm:gap-4 min-w-0">
         <AstronautProfile compact />
-        <Link to="/emergency" className="btn-danger" aria-label="Emergency"><Siren size={24} aria-hidden="true" /><span className="hidden sm:inline">Emergency</span></Link>
+        <Link to="/emergency" className="btn-danger !px-4 sm:!px-6" aria-label="Emergency"><Siren size={24} aria-hidden="true" /><span className="hidden sm:inline">Emergency</span></Link>
         <div className="relative" ref={box}>
           <button type="button" className="btn-secondary relative" onClick={() => setOpen(!open)} aria-expanded={open} aria-haspopup="true" aria-label={`Notifications, ${count} need attention`}>
             <Bell size={24} aria-hidden="true" />

@@ -8,7 +8,7 @@ export default function AstronautProfile({ compact }) {
   if (!p) return <div className="text-sm opacity-70">Loading profile…</div>;
   if (compact) {
     return (
-      <div className="flex items-center gap-3">
+      <div className="hidden items-center gap-3 sm:flex">
         <span className="hidden sm:grid h-11 w-11 place-items-center rounded-full bg-primary-light text-primary-dark"><UserRound size={24} aria-hidden="true" /></span>
         <div className="hidden md:block leading-tight"><p className="font-bold">{p.id}</p><p className="text-sm text-muted">Mission day {p.missionDay}</p></div>
         <RiskBadge level={p.status} size="sm" />

@@ -18,7 +18,7 @@ export default {
         crit: { DEFAULT: '#D75C5C', dark: '#A33A3A', bg: '#FBE8E8' },
       },
       fontFamily: {
-        sans: ['"IBM Plex Sans"', '"IBM Plex Sans Arabic"', 'system-ui', 'Segoe UI', 'Tahoma', 'sans-serif'],
+        sans: ['Manrope', '"IBM Plex Sans Arabic"', '"IBM Plex Sans"', 'system-ui', 'Segoe UI', 'Tahoma', 'sans-serif'],
         mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
       },
       fontSize: {
@@ -33,8 +33,8 @@ export default {
         '5xl': ['3.5rem', '1'],
       },
       spacing: { touch: '3rem' },
-      boxShadow: { card: '0 1px 2px rgba(20,37,54,.06), 0 4px 14px rgba(20,37,54,.05)' },
-      borderRadius: { xl: '14px', '2xl': '20px' },
+      boxShadow: { card: '0 1px 0 rgba(20,37,54,.03), 0 8px 24px -12px rgba(20,37,54,.10)' },
+      borderRadius: { xl: '14px', '2xl': '22px', '3xl': '32px' },
     },
   },
   plugins: [],

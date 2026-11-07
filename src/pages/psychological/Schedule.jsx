@@ -34,7 +34,7 @@ export default function Schedule() {
 
   return (
     <>
-      <PageHeader hero="psychological" accent="#7A6FB0" title="Daily Schedule" ar="الجدول اليومي" tabs={PSYCH_TABS}
+      <PageHeader eyebrow="Psychological health" counter="04 / 07" hero="psychological" accent="#7A6FB0" title="Daily Schedule" ar="الجدول اليومي" tabs={PSYCH_TABS}
         subtitle="A proposed 24-hour mission routine. This is an example schedule, not a mandatory or NASA-approved protocol." />
       <div className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <div className="card border-t-8 border-primary"><p className="font-semibold text-muted">Current activity</p><p className="mt-1 text-2xl font-bold">{current.name}</p><p className="font-mono text-lg">{current.start} – {current.end}</p></div>

@@ -1,8 +1,11 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
-import { ArrowRight, ClipboardPlus, FileText } from 'lucide-react';
-import PageHeader from '../components/ui/PageHeader';
+import { ArrowUpRight, ClipboardPlus } from 'lucide-react';
+import MissionHero from '../components/medical/MissionHero';
+import Segmented from '../components/ui/Segmented';
+import Eyebrow from '../components/ui/Eyebrow';
+import { Radiation, Siren, Brain, Orbit, Apple, Wind, ChevronRight } from 'lucide-react';
 import HealthStatusCard from '../components/medical/HealthStatusCard';
 import ChartCard from '../components/data/ChartCard';
 import NotificationPanel from '../components/data/NotificationPanel';
@@ -17,6 +20,7 @@ import { baseOptions, C } from '../lib/chart';
 import { fmtDate, fmtDateTime, fmtShort } from '../lib/format';
 import { TYPE_LABEL } from '../config/nav';
 
+const TYPE_ICON = { radiation: Radiation, emergency: Siren, psychological: Brain, gravity: Orbit, nutrition: Apple, respiration: Wind };
 const RANGES = [{ d: 7, l: '7 days' }, { d: 14, l: '14 days' }, { d: 30, l: '30 days' }];
 const ds = (label, data, color, extra = {}) => ({ label, data, borderColor: color, backgroundColor: color + '22', borderWidth: 3, pointRadius: 3, pointHoverRadius: 6, tension: 0.3, ...extra });
 
@@ -38,12 +42,11 @@ export default function Dashboard() {
 
   return (
     <>
-      <PageHeader title="Dashboard" ar="الرئيسية" subtitle="Medical overview for the current crew member. Values below are demonstration data until the Express API is connected." accent="#3C7896">
-        {USE_MOCK && <DemoBadge />}
-      </PageHeader>
+      <MissionHero onStart={() => document.getElementById('mac')?.scrollIntoView({ behavior: 'smooth', block: 'start' })} />
+      {USE_MOCK && <p className="-mt-4 mb-8"><DemoBadge>Demonstration data until the Express API is connected</DemoBadge></p>}
 
       <section aria-labelledby="ov" className="mb-8">
-        <h2 id="ov" className="mb-4">Overall Health Overview</h2>
+        <Eyebrow className="mb-2" right="01 — 04">Overview</Eyebrow><h2 id="ov" className="mb-5 !text-3xl">Overall Health Overview</h2>
         {summary.error ? <ErrorState error={summary.error} onRetry={summary.reload} /> : (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {(summary.data || []).map((s) => <HealthStatusCard key={s.key} {...s} />)}
@@ -52,10 +55,8 @@ export default function Dashboard() {
 
       <section aria-labelledby="an" className="mb-8">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <h2 id="an">Medical Analytics</h2>
-          <div role="group" aria-label="Date range" className="flex gap-2">
-            {RANGES.map((r) => <button key={r.d} type="button" className="chip" aria-pressed={days === r.d} onClick={() => setDays(r.d)}>{r.l}</button>)}
-          </div>
+          <div className="w-full sm:w-auto"><Eyebrow className="mb-2" right="02 — 04">Analytics</Eyebrow><h2 id="an" className="!text-3xl">Medical Analytics</h2></div>
+          <Segmented label="Date range" value={days} onChange={setDays} items={RANGES.map((r) => ({ value: r.d, label: r.l }))} />
         </div>
         {analytics.error ? <ErrorState error={analytics.error} onRetry={analytics.reload} /> : !a ? <p role="status" className="text-muted">Loading charts…</p> : (
           <div className="grid gap-5 lg:grid-cols-2">
@@ -88,7 +89,7 @@ export default function Dashboard() {
       </section>
 
       <section aria-labelledby="mac" className="mb-8">
-        <h2 id="mac" className="mb-4">Medical Assessment Center</h2>
+        <Eyebrow className="mb-2" right="03 — 04">Assessments</Eyebrow><h2 id="mac" className="mb-5 !text-3xl scroll-mt-28">Medical Assessment Center</h2>
         {center.error ? <ErrorState error={center.error} onRetry={center.reload} /> : (
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {(center.data || []).map((t) => (
@@ -97,30 +98,32 @@ export default function Dashboard() {
                 <p>{t.description}</p>
                 <p className="text-sm text-muted"><strong className="text-ink">Required:</strong> {t.needs}</p>
                 <p className="text-sm text-muted">Last assessment: <strong className="text-ink">{fmtDate(t.lastDate)}</strong></p>
-                <button type="button" className="btn-primary mt-auto" onClick={() => nav(`${t.to}?start=1`)}><ClipboardPlus size={22} aria-hidden="true" /> Start Assessment</button>
+                <button type="button" className="btn-primary mt-auto" onClick={() => nav(`${t.to}?start=1`)}><ClipboardPlus size={22} aria-hidden="true" /> Start Assessment <ArrowUpRight size={20} aria-hidden="true" /></button>
               </article>))}
           </div>)}
       </section>
 
-      <div className="grid gap-6 xl:grid-cols-5">
-        <section aria-labelledby="rp" className="xl:col-span-3">
-          <div className="mb-4 flex items-center justify-between"><h2 id="rp">Latest Medical Reports</h2><Link to="/reports" className="btn-secondary">All reports <ArrowRight size={20} aria-hidden="true" /></Link></div>
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-5">
+        <section aria-labelledby="rp" className="min-w-0 xl:col-span-3">
+          <Eyebrow className="mb-2" right="04 — 04">Reports</Eyebrow>
+          <div className="mb-3 flex items-center justify-between gap-3"><h2 id="rp" className="!text-3xl">Latest Medical Reports</h2><Link to="/reports" className="arrow-link">All reports<ArrowUpRight size={20} aria-hidden="true" /></Link></div>
           {reports.error ? <ErrorState error={reports.error} onRetry={reports.reload} /> : (
-            <ul className="space-y-3">
-              {(reports.data || []).slice(0, 4).map((r) => (
-                <li key={r.id} className="card !p-4 flex flex-wrap items-center gap-3 justify-between">
-                  <div className="min-w-0 flex-1 basis-64">
-                    <p className="text-lg font-bold">{r.name}</p>
-                    <p className="text-sm text-muted">{TYPE_LABEL[r.type]} · {fmtDateTime(r.createdAt)} · {r.id}</p>
-                    <p className="mt-1">{r.summary}</p>
-                  </div>
-                  <RiskBadge level={r.status} />
-                  <Link className="btn-secondary" to={`/reports/${r.id}`}><FileText size={20} aria-hidden="true" /> View Report</Link>
-                </li>))}
+            <ul className="border-b border-line">
+              {(reports.data || []).slice(0, 5).map((r) => { const I = TYPE_ICON[r.type]; return (
+                <li key={r.id} className="border-t border-line">
+                  <Link to={`/reports/${r.id}`} className="group flex items-center gap-4 py-5 hover:bg-white/60" aria-label={`View report ${r.name}, ${r.id}`}>
+                    <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-sidebar text-white"><I size={26} aria-hidden="true" /></span>
+                    <span className="min-w-0 flex-1"><span className="block truncate text-xl font-semibold" style={{ letterSpacing: '-0.015em' }}>{r.name}</span>
+                      <span className="block text-muted">{TYPE_LABEL[r.type]} · {fmtDateTime(r.createdAt)} · <span className="font-mono">{r.id}</span></span>
+                      <span className="mt-1 hidden sm:block">{r.summary}</span></span>
+                    <RiskBadge level={r.status} size="sm" className="shrink-0" />
+                    <ChevronRight size={24} aria-hidden="true" className="shrink-0 text-muted transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </li>); })}
             </ul>)}
         </section>
-        <section aria-labelledby="al" className="xl:col-span-2">
-          <h2 id="al" className="mb-4">Alerts and Notifications</h2>
+        <section aria-labelledby="al" className="min-w-0 xl:col-span-2">
+          <Eyebrow className="mb-2">Alerts</Eyebrow><h2 id="al" className="mb-3 !text-3xl">Alerts and Notifications</h2>
           <div className="card !p-0 overflow-hidden"><NotificationPanel alerts={alerts.data || []} /></div>
         </section>
       </div>

@@ -8,7 +8,7 @@ export const NUTRITION_TABS = [{ to: '/nutrition', end: true, label: 'Nutrition 
 export default function NutritionPage() {
   return (
     <>
-      <PageHeader hero="nutrition" accent="#2E8F7A" title="Nutrition & Respiration" ar="التغذية والتنفس"
+      <PageHeader eyebrow="Nutrition & respiration" counter="06 / 07" hero="nutrition" accent="#2E8F7A" title="Nutrition & Respiration" ar="التغذية والتنفس"
         subtitle="Nutrition assessment — monitor immune efficiency, nutritional status and blood gases." tabs={NUTRITION_TABS} />
       <AssessmentWorkflow config={NUTRITION} submit={submit} />
     </>

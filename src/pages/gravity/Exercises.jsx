@@ -34,7 +34,7 @@ export default function Exercises() {
       <select className="field" value={f[key]} onChange={(e) => setF({ ...f, [key]: e.target.value })}><option value="">All</option>{options.map((o) => <option key={o}>{o}</option>)}</select></label>);
   return (
     <>
-      <PageHeader hero="gravity" accent="#7A6FB0" title="Exercise Programs" ar="التمارين" tabs={[{ to: '/gravity', end: true, label: 'Assessment & Decision · الاختبار والقرار' }, { to: '/gravity/exercises', label: 'Exercise Programs · التمارين' }]}
+      <PageHeader eyebrow="Gravity effects" counter="05 / 07" hero="gravity" accent="#7A6FB0" title="Exercise Programs" ar="التمارين" tabs={[{ to: '/gravity', end: true, label: 'Assessment & Decision · الاختبار والقرار' }, { to: '/gravity/exercises', label: 'Exercise Programs · التمارين' }]}
         subtitle="Exercise library for microgravity conditioning."><DemoBadge>Demo content</DemoBadge></PageHeader>
       <p className="mb-5 flex gap-3 rounded-xl border-2 border-warn bg-warn-bg p-4 font-semibold text-warn-dark"><ShieldAlert size={26} className="shrink-0" aria-hidden="true" />These are example exercises. Programmes must be prescribed and medically supervised for each astronaut — they are not universal prescriptions.</p>
       <div className="mb-3 flex flex-wrap gap-4 rounded-xl border border-line bg-white p-4 shadow-card" role="search" aria-label="Exercise filters">
@@ -51,7 +51,7 @@ export default function Exercises() {
                 <span className={`inline-flex w-fit items-center gap-2 rounded-full border-2 px-3 py-0.5 text-sm font-bold ${S.tag}`}><S.Icon size={16} aria-hidden="true" />{x.type}</span>
                 <h3>{x.name}</h3>
                 <dl className="grid grid-cols-2 gap-x-3 gap-y-1">
-                  <dt className="text-muted">Target</dt><dd className="font-semibold">{x.muscles.join(', ')}</dd>
+                  <dt className="text-muted">Target</dt><dd className="flex flex-wrap gap-1.5">{x.muscles.map((m) => <span key={m} className="tag">{m}</span>)}</dd>
                   <dt className="text-muted">Duration</dt><dd className="font-semibold">{x.duration}</dd>
                   <dt className="text-muted">Intensity</dt><dd className="font-semibold"><Zap className="mr-1 inline" size={16} aria-hidden="true" />{x.intensity}</dd>
                   <dt className="text-muted">Level</dt><dd className="font-semibold">{x.difficulty}</dd>

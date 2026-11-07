@@ -17,7 +17,7 @@ export default function EmergencyTests() {
   const v = last.data;
   return (
     <>
-      <PageHeader hero="emergency" accent="#D75C5C" title="Emergency" ar="الطوارئ"
+      <PageHeader eyebrow="Emergency" counter="03 / 07" hero="emergency" accent="#D75C5C" title="Emergency" ar="الطوارئ"
         subtitle="Emergency tests & measurements. A critical value raises an immediate alert and protocol instructions — it never waits for the AI analysis, and the AI is never the only decision-maker."
         tabs={EMERGENCY_TABS} />
       <section aria-labelledby="lv" className="mb-6">
