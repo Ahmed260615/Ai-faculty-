@@ -1,3 +1,4 @@
+import PhotoStrip from '../../components/ui/PhotoStrip';
 import PageHeader from '../../components/ui/PageHeader';
 import AssessmentWorkflow from '../../components/medical/AssessmentWorkflow';
 import { NUTRITION } from '../../config/assessments';
@@ -10,6 +11,7 @@ export default function NutritionPage() {
     <>
       <PageHeader eyebrow="Nutrition & respiration" counter="06 / 07" hero="nutrition" accent="#2E8F7A" title="Nutrition & Respiration" ar="التغذية والتنفس"
         subtitle="Nutrition assessment — monitor immune efficiency, nutritional status and blood gases." tabs={NUTRITION_TABS} />
+      <PhotoStrip items={['lettuce', 'meal', 'plants-iss']} />
       <AssessmentWorkflow config={NUTRITION} submit={submit} />
     </>
   );

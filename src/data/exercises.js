@@ -2,7 +2,8 @@
 export const TYPES = ['Resistance Training', 'Aerobic Training', 'Mobility & Balance'];
 export const OBJECTIVES = ['Bone loading', 'Muscle retention', 'Cardiovascular fitness', 'Balance & coordination', 'Flexibility & recovery'];
 export const MUSCLES = ['Legs', 'Glutes', 'Back', 'Chest', 'Arms', 'Core', 'Shoulders', 'Full body'];
-const e = (id, type, name, muscles, duration, intensity, difficulty, objective, instructions, safety, icon) => ({ id, type, name, muscles, duration, intensity, difficulty, objective, instructions, safety, icon });
+const PH = {1: "ared-squat", 2: "ared-lift", 3: "ared-ground", 4: "ared-band", 5: "ared-iss", 6: "ared-upper", 7: "treadmill", 8: "cycle", 9: "treadmill-2", 10: "float-1", 11: "tvis", 12: "tvis-2", 13: "float-2"};
+const e = (id, type, name, muscles, duration, intensity, difficulty, objective, instructions, safety, icon) => ({ id, type, name, muscles, duration, intensity, difficulty, objective, instructions, safety, icon, photo: PH[id] });
 const SAFE = 'Follow your supervised exercise plan; stop and tell the medical officer if you feel pain, dizziness or chest discomfort.';
 export const EXERCISES = [
   e(1, 'Resistance Training', 'Squats', ['Legs', 'Glutes', 'Core'], '15 min', 'High', 'Intermediate', 'Bone loading', ['Secure yourself in the resistance device as trained.', 'Lower under control, keeping the spine neutral.', 'Drive back up and repeat for the planned repetitions.'], ['Check harness and loading before starting.', SAFE], 'squat'),

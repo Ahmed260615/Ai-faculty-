@@ -10,7 +10,7 @@ export default function AIResultCard({ result, onViewReport, heading = 'Assessme
   const cmp = result.comparison;
   const Trend = cmp && hasScore && cmp.previousScore != null ? (result.riskScore > cmp.previousScore ? TrendingUp : result.riskScore < cmp.previousScore ? TrendingDown : Minus) : null;
   return (
-    <section className={`card border-t-8 ${statusOf(result.status).border}`} aria-labelledby="res-h">
+    <section className={`card pop border-t-8 ${statusOf(result.status).border}`} aria-labelledby="res-h">
       {demo && (
         <p className="mb-4 flex items-start gap-2 rounded-xl border-2 border-dashed border-primary bg-primary-light p-3 font-semibold text-primary-dark">
           <FlaskConical size={22} className="shrink-0 mt-0.5" aria-hidden="true" />

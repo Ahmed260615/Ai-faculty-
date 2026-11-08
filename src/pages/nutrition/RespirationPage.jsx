@@ -1,4 +1,6 @@
 import { Line } from 'react-chartjs-2';
+import { useTheme } from '../../context/ThemeContext';
+import PhotoStrip from '../../components/ui/PhotoStrip';
 import PageHeader from '../../components/ui/PageHeader';
 import AssessmentWorkflow from '../../components/medical/AssessmentWorkflow';
 import MeasurementCard from '../../components/medical/MeasurementCard';
@@ -28,10 +30,10 @@ function SpO2Gauge({ value, status }) {
     <div className="card flex flex-col items-center" role="group" aria-label={`Oxygen saturation ${value} percent, ${s.label}`}>
       <p className="self-start font-semibold text-muted">Oxygen Saturation (SpO₂) — pulse oximetry</p>
       <svg viewBox="0 0 180 160" className="w-64 max-w-full" aria-hidden="true">
-        <circle cx="90" cy="90" r={r} fill="none" stroke="#E3E9EF" strokeWidth="16" strokeLinecap="round" strokeDasharray={`${arc} ${circ}`} transform="rotate(135 90 90)" />
+        <circle cx="90" cy="90" r={r} fill="none" className="stroke-line" strokeWidth="16" strokeLinecap="round" strokeDasharray={`${arc} ${circ}`} transform="rotate(135 90 90)" />
         <circle cx="90" cy="90" r={r} fill="none" stroke={s.hex} strokeWidth="16" strokeLinecap="round" strokeDasharray={`${Math.max(0, filled)} ${circ}`} transform="rotate(135 90 90)" />
-        <text x="90" y="92" textAnchor="middle" fontSize="40" fontWeight="600" fontFamily="IBM Plex Mono, monospace" fill="#203040">{value}%</text>
-        <text x="90" y="116" textAnchor="middle" fontSize="13" fill="#566778">scale 70–100 %</text>
+        <text x="90" y="92" textAnchor="middle" fontSize="40" fontWeight="600" fontFamily="IBM Plex Mono, monospace" className="fill-ink">{value}%</text>
+        <text x="90" y="116" textAnchor="middle" fontSize="13" className="fill-muted">scale 70–100 %</text>
       </svg>
       <RiskBadge level={status} size="lg" />
     </div>
@@ -39,6 +41,7 @@ function SpO2Gauge({ value, status }) {
 }
 
 export default function RespirationPage() {
+  useTheme();
   const hist = useAsync(() => getHistory(14), []);
   const past = useAsync(() => listReports({ type: 'respiration' }), []);
   const l = hist.data?.latest;
@@ -48,6 +51,7 @@ export default function RespirationPage() {
     <>
       <PageHeader eyebrow="Nutrition & respiration" counter="06 / 07" hero="nutrition" accent="#2E8F7A" title="Respiration" ar="التنفس" tabs={NUTRITION_TABS}
         subtitle="Respiratory monitoring — oxygen saturation, respiratory rate and blood gases. Critical respiratory alerts follow the emergency protocol independently of the AI assessment." />
+      <PhotoStrip items={['respirator', 'eva-suit', 'glovebox-2']} />
       <section aria-labelledby="cur" className="mb-6">
         <div className="mb-3 flex flex-wrap items-center gap-3"><h2 id="cur">Current Respiratory Status</h2><RiskBadge level={current} />{USE_MOCK && <DemoBadge />}</div>
         {hist.error ? <ErrorState error={hist.error} onRetry={hist.reload} /> : l && (

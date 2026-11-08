@@ -1,3 +1,4 @@
+import PhotoStrip from '../../components/ui/PhotoStrip';
 import PageHeader from '../../components/ui/PageHeader';
 import AssessmentWorkflow from '../../components/medical/AssessmentWorkflow';
 import MeasurementCard from '../../components/medical/MeasurementCard';
@@ -20,6 +21,7 @@ export default function EmergencyTests() {
       <PageHeader eyebrow="Emergency" counter="03 / 07" hero="emergency" accent="#D75C5C" title="Emergency" ar="الطوارئ"
         subtitle="Emergency tests & measurements. A critical value raises an immediate alert and protocol instructions — it never waits for the AI analysis, and the AI is never the only decision-maker."
         tabs={EMERGENCY_TABS} />
+      <PhotoStrip items={['respirator', 'procedure', 'lab-medical']} />
       <section aria-labelledby="lv" className="mb-6">
         <div className="mb-3 flex flex-wrap items-center gap-3"><h2 id="lv">Last Recorded Vital Signs</h2>{USE_MOCK && <DemoBadge />}</div>
         {last.error ? <ErrorState error={last.error} onRetry={last.reload} /> : (

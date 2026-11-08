@@ -1,6 +1,7 @@
 /** DEMONSTRATION placeholders. Replace with medically reviewed content from the video service. */
 export const VIDEO_CATEGORIES = ['Cardiac Emergencies', 'Respiratory Emergencies', 'Injuries and Trauma', 'Medical Emergencies', 'First Aid', 'Preventive Procedures'];
-const v = (id, category, title, description, duration, hue) => ({ id, category, title, description, duration, hue });
+const PH = {1: "lab-medical-2", 2: "procedure", 3: "respirator", 4: "glovebox-2", 5: "eva-suit", 6: "eva", 7: "lab-medical", 8: "crew-lab", 9: "lab-research", 10: "glovebox", 11: "quarters-wide", 12: "sensor"};
+const v = (id, category, title, description, duration, hue) => ({ id, category, title, description, duration, hue, photo: PH[id] });
 export const VIDEOS = [
   v(1, 'Cardiac Emergencies', 'Recognising cardiac emergencies', 'Placeholder overview of cardiac emergency recognition.', '4:20', 0),
   v(2, 'Cardiac Emergencies', 'Using the onboard defibrillator', 'Placeholder walkthrough of the onboard AED unit.', '6:05', 8),

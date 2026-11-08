@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import { ArrowLeft, ArrowRight, FileText, HeartHandshake, OctagonAlert, RotateCcw, Save } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
+import PhotoStrip from '../../components/ui/PhotoStrip';
 import PageHeader from '../../components/ui/PageHeader';
 import RiskBadge from '../../components/ui/RiskBadge';
 import ChartCard from '../../components/data/ChartCard';
@@ -63,7 +65,7 @@ function Phq9({ history, onSaved }) {
   if (stage === 'q') return (
     <div className="card space-y-5" aria-live="polite">
       <div className="flex items-center justify-between gap-3"><p className="font-semibold text-muted">Question {i + 1} of 9 · last 2 weeks</p><p className="text-muted">{Math.round((i / 9) * 100)}% complete</p></div>
-      <div className="h-3 rounded-full bg-line" role="progressbar" aria-valuenow={i + 1} aria-valuemin={1} aria-valuemax={9} aria-label="Questionnaire progress"><div className="h-3 rounded-full bg-primary" style={{ width: `${((i + 1) / 9) * 100}%` }} /></div>
+      <div className="h-3 rounded-full bg-line" role="progressbar" aria-valuenow={i + 1} aria-valuemin={1} aria-valuemax={9} aria-label="Questionnaire progress"><div className="h-3 rounded-full bg-primary" style={{ width: `${((i + 1) / 9) * 100}%`, transition: 'width 400ms var(--ease)' }} /></div>
       <p className="text-muted">{PHQ9_STEM}</p>
       <fieldset><legend className="text-2xl font-semibold leading-snug">{i + 1}. {PHQ9_ITEMS[i]}</legend>
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -121,7 +123,7 @@ function Phq9({ history, onSaved }) {
 const MOODS = ['Very low', 'Low', 'Okay', 'Good', 'Very good'], STRESS = ['None', 'Mild', 'Moderate', 'High', 'Very high'];
 function Scale({ legend, labels, value, onChange }) {
   return (<fieldset><legend className="label text-lg">{legend}</legend><div className="grid grid-cols-5 gap-2">{labels.map((l, k) => (
-    <button type="button" key={l} aria-pressed={value === k + 1} onClick={() => onChange(k + 1)} className={`min-h-[4.5rem] rounded-xl border-2 px-1 font-semibold ${value === k + 1 ? 'border-primary bg-primary text-white' : 'border-line bg-white hover:border-primary'}`}><span className="block font-mono text-2xl">{k + 1}</span><span className="text-sm">{l}</span></button>))}</div></fieldset>);
+    <button type="button" key={l} aria-pressed={value === k + 1} onClick={() => onChange(k + 1)} className={`min-h-[4.5rem] rounded-xl border-2 px-1 font-semibold ${value === k + 1 ? 'border-primary bg-primary text-black' : 'border-line bg-surface hover:border-primary'}`}><span className="block font-mono text-2xl">{k + 1}</span><span className="text-sm">{l}</span></button>))}</div></fieldset>);
 }
 function Checkin() {
   const { data, error, reload } = useAsync(getCheckins, []);
@@ -147,12 +149,14 @@ function Checkin() {
 }
 
 export default function PsychAssessment() {
+  useTheme();
   const [tab, setTab] = useState('phq');
   const hist = useAsync(getPhqHistory, []);
   return (
     <>
       <PageHeader eyebrow="Psychological health" counter="04 / 07" hero="psychological" accent="#7A6FB0" title="Psychological Assessment" ar="الاختبار النفسي" tabs={PSYCH_TABS}
         subtitle="PHQ-9 depressive-symptom screening (last 2 weeks) and a separate daily mood & stress check-in.">{USE_MOCK && <DemoBadge>Earlier scores are demo data</DemoBadge>}</PageHeader>
+      <PhotoStrip items={['cupola-crew', 'earth-limb']} ratio="aspect-[21/9]" />
       <div className="mb-5 flex flex-wrap gap-2" role="tablist" aria-label="Assessment type">
         <button role="tab" aria-selected={tab === 'phq'} className="chip" aria-pressed={tab === 'phq'} onClick={() => setTab('phq')}>PHQ-9 · last 2 weeks</button>
         <button role="tab" aria-selected={tab === 'daily'} className="chip" aria-pressed={tab === 'daily'} onClick={() => setTab('daily')}>Daily check-in</button>

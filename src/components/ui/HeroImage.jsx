@@ -11,5 +11,5 @@ export const HERO = {
 };
 export default function HeroImage({ name }) {
   const h = HERO[name];
-  return <img src={h.src} alt={h.alt} width="1600" height="528" className="block w-full h-auto" />;
+  return <img src={h.src} alt={h.alt} width="1600" height="528" className="img-in block w-full h-auto" />;
 }

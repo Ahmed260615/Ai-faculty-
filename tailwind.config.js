@@ -1,25 +1,24 @@
+const v = (n) => `rgb(var(--${n}) / <alpha-value>)`;
 /** Design tokens for AstroHealth. Body text is 18px+, nothing below 15px. */
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       colors: {
-        bg: '#F3F6F9',
-        sidebar: '#142536',
-        'sidebar-2': '#1d3348',
-        primary: { DEFAULT: '#3C7896', dark: '#2B5B74', light: '#E3EEF3' },
-        secondary: '#7FA9B9',
-        accent: '#8CA9A1',
-        ink: '#203040',
-        muted: '#566778', // darkened from #667788 for AA contrast on white
-        line: '#D5DEE6',
-        ok: { DEFAULT: '#2E9D78', dark: '#1F7357', bg: '#E4F4EE' },
-        warn: { DEFAULT: '#D9A441', dark: '#8A6212', bg: '#FBF2DE' },
-        crit: { DEFAULT: '#D75C5C', dark: '#A33A3A', bg: '#FBE8E8' },
+        bg: v('bg'), surface: v('surface'), surface2: v('surface2'),
+        sidebar: v('sidebar'), 'sidebar-2': v('sidebar-2'),
+        primary: { DEFAULT: v('primary'), dark: v('primary-dark'), light: v('primary-light') },
+        secondary: v('secondary'), accent: v('accent'),
+        ink: v('ink'), muted: v('muted'), line: v('line'),
+        violet: { DEFAULT: v('violet'), text: v('violet-text') },
+        ok: { DEFAULT: v('ok'), dark: v('ok-dark'), bg: v('ok-bg') },
+        warn: { DEFAULT: v('warn'), dark: v('warn-dark'), bg: v('warn-bg') },
+        crit: { DEFAULT: v('crit'), dark: v('crit-dark'), bg: v('crit-bg'), solid: v('crit-solid') },
       },
       fontFamily: {
-        sans: ['Manrope', '"IBM Plex Sans Arabic"', '"IBM Plex Sans"', 'system-ui', 'Segoe UI', 'Tahoma', 'sans-serif'],
-        mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+        sans: ['Cairo', 'system-ui', 'Segoe UI', 'Tahoma', 'sans-serif'],
+        display: ['"29LT Bukra"', 'Cairo', 'system-ui', 'sans-serif'],
+        mono: ['"29LT Bukra"', 'Cairo', 'system-ui', 'sans-serif'], // numerals: Bukra, tabular
       },
       fontSize: {
         xs: ['0.9375rem', '1.4rem'],

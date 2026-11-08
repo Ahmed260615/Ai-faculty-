@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Brain, CalendarCheck, Grid3x3, Hash, Lightbulb, Medal, Puzzle, Rows3, Timer, Trophy, TypeOutline } from 'lucide-react';
+import PhotoStrip from '../../components/ui/PhotoStrip';
 import PageHeader from '../../components/ui/PageHeader';
+import Reveal from '../../components/ui/Reveal';
 import EmptyState from '../../components/ui/EmptyState';
 import DemoBadge from '../../components/ui/DemoBadge';
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -14,7 +16,7 @@ const mmss = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
 function Grid({ g, size = 'md' }) {
   const n = g.length, cell = size === 'sm' ? 'h-8 w-8' : 'h-10 w-10';
-  return <div className="inline-grid gap-1 rounded-lg bg-bg p-2" style={{ gridTemplateColumns: `repeat(${n}, auto)` }} role="img" aria-label={`Grid pattern: ${g.map((r) => r.join('')).join(', ')}`}>{g.flat().map((c, i) => <span key={i} className={`${cell} rounded ${c ? 'bg-primary' : 'bg-white border border-line'}`} />)}</div>;
+  return <div className="inline-grid gap-1 rounded-lg bg-bg p-2" style={{ gridTemplateColumns: `repeat(${n}, auto)` }} role="img" aria-label={`Grid pattern: ${g.map((r) => r.join('')).join(', ')}`}>{g.flat().map((c, i) => <span key={i} className={`${cell} rounded ${c ? 'bg-primary' : 'bg-surface border border-line'}`} />)}</div>;
 }
 
 /** Sequence-memory game. */
@@ -49,7 +51,7 @@ function Memory({ diff, seed, onFinish, elapsed }) {
       <p className="font-semibold text-muted">Round {round + 1} of 3 · Sequence length {seq.length} · <Timer className="inline" size={18} aria-hidden="true" /> {mmss(elapsed)}</p>
       <p role="status" className="text-xl font-semibold">{msg}</p>
       <div className="mx-auto grid max-w-sm gap-3" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
-        {Array.from({ length: cells }, (_, c) => <button key={c} type="button" disabled={phase !== 'input'} onClick={() => tap(c)} aria-label={`Pad ${c + 1}`} className={`aspect-square min-h-[5rem] rounded-2xl border-2 text-2xl font-bold transition-colors ${lit === c ? 'border-accent bg-accent text-white' : 'border-line bg-primary-light text-primary-dark'}`}>{c + 1}</button>)}
+        {Array.from({ length: cells }, (_, c) => <button key={c} type="button" disabled={phase !== 'input'} onClick={() => tap(c)} aria-label={`Pad ${c + 1}`} className={`aspect-square min-h-[5rem] rounded-2xl border-2 text-2xl font-bold transition-colors ${lit === c ? 'border-primary bg-primary text-black' : 'border-line bg-primary-light text-primary-dark'}`}>{c + 1}</button>)}
       </div>
     </div>);
 }
@@ -81,11 +83,11 @@ function Session({ game, diff, seed, daily, onDone, onQuit }) {
       {q.text ? (
         <form onSubmit={(e) => { e.preventDefault(); if (text.trim()) answer(text); }} className="flex flex-wrap gap-3"><label className="min-w-[14rem] flex-1"><span className="sr-only">Your answer</span><input className="field uppercase" value={text} onChange={(e) => setText(e.target.value)} disabled={!!fb} autoFocus placeholder="Type the word" autoComplete="off" /></label><button className="btn-primary" disabled={!!fb || !text.trim()}>Check</button></form>
       ) : q.gridOptions ? (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">{q.gridOptions.map((g, k) => <button key={k} type="button" disabled={!!fb} onClick={() => answer(k)} aria-label={`Option ${k + 1}`} className={`flex min-h-[6rem] flex-col items-center gap-2 rounded-xl border-2 p-3 ${fb && k === q.answer ? 'border-ok bg-ok-bg' : fb?.given === k ? 'border-crit bg-crit-bg' : 'border-line hover:border-primary'}`}><Grid g={g} size="sm" /><span className="font-bold">Option {k + 1}</span></button>)}</div>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">{q.gridOptions.map((g, k) => <button key={k} type="button" disabled={!!fb} onClick={() => answer(k)} aria-label={`Option ${k + 1}`} className={`flex min-h-[6rem] flex-col items-center gap-2 rounded-xl border-2 p-3 ${fb && k === q.answer ? 'bump border-ok bg-ok-bg' : fb?.given === k ? 'shake border-crit bg-crit-bg' : 'border-line hover:border-primary'}`}><Grid g={g} size="sm" /><span className="font-bold">Option {k + 1}</span></button>)}</div>
       ) : (
-        <div className="grid gap-3 sm:grid-cols-2">{q.options.map((o) => <button key={o} type="button" disabled={!!fb} onClick={() => answer(o)} className={`min-h-[4rem] rounded-xl border-2 px-4 text-xl font-semibold ${fb && o === q.answer ? 'border-ok bg-ok-bg' : fb?.given === o ? 'border-crit bg-crit-bg' : 'border-line bg-white hover:border-primary'}`}>{o}{fb && o === q.answer ? ' ✓' : fb?.given === o ? ' ✗' : ''}</button>)}</div>
+        <div className="grid gap-3 sm:grid-cols-2">{q.options.map((o) => <button key={o} type="button" disabled={!!fb} onClick={() => answer(o)} className={`min-h-[4rem] rounded-xl border-2 px-4 text-xl font-semibold ${fb && o === q.answer ? 'bump border-ok bg-ok-bg' : fb?.given === o ? 'shake border-crit bg-crit-bg' : 'border-line bg-surface hover:border-primary'}`}>{o}{fb && o === q.answer ? ' ✓' : fb?.given === o ? ' ✗' : ''}</button>)}</div>
       )}
-      {fb && (<div role="status" className={`flex flex-wrap items-center justify-between gap-3 rounded-xl p-4 font-semibold ${fb.ok ? 'bg-ok-bg text-ok-dark' : 'bg-crit-bg text-crit-dark'}`}>
+      {fb && (<div role="status" className={`pop flex flex-wrap items-center justify-between gap-3 rounded-xl p-4 font-semibold ${fb.ok ? 'bg-ok-bg text-ok-dark' : 'bg-crit-bg text-crit-dark'}`}>
         <span>{fb.ok ? `Correct! +${fb.pts} points` : `Not quite.${fb.shown ? ` The word was ${fb.shown}.` : ''}`}</span><button className="btn-primary" onClick={next} autoFocus>{i + 1 >= ROUNDS ? 'Finish' : 'Next question'}</button></div>)}
       <button className="btn-ghost" onClick={onQuit}>Quit session</button>
     </div>);
@@ -110,6 +112,7 @@ export default function Puzzles() {
     <>
       <PageHeader eyebrow="Psychological health" counter="04 / 07" hero="psychological" accent="#7A6FB0" title="Puzzles & Entertainment" ar="الألغاز" tabs={PSYCH_TABS}
         subtitle="Short cognitive challenges to reduce boredom and keep the mind engaged. Scores are stored on this device." />
+      {!active && <PhotoStrip items={['crew-group', 'lab-research', 'cupola-float']} />}
       {active ? <Session key={active.seed + active.game} {...active} onDone={done} onQuit={() => setActive(null)} /> : (
         <div className="space-y-6">
           {last && <div role="status" className="card border-t-8 border-ok"><h2>Session complete</h2><p className="mt-2 text-xl">{GAMES[last.game].name} · {last.diff}: <strong>{last.correct}/{last.rounds} correct</strong>, <strong>{last.score} points</strong> in {mmss(last.secs)}.</p></div>}
@@ -127,9 +130,9 @@ export default function Puzzles() {
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3"><h2 id="pg">Choose a puzzle</h2>
               <div role="group" aria-label="Difficulty" className="flex gap-2">{DIFFS.map((d) => <button key={d} className="chip" aria-pressed={diff === d} onClick={() => setDiff(d)}>{d}</button>)}</div></div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {Object.entries(GAMES).map(([k, g]) => { const I = ICON[k]; return (
-                <article key={k} className="card flex flex-col gap-3"><div className="flex items-center gap-3"><span className="grid h-12 w-12 place-items-center rounded-xl bg-primary-light text-primary-dark"><I size={26} aria-hidden="true" /></span><h3>{g.name}</h3></div>
-                  <p className="text-muted">{g.desc}</p><button className="btn-primary mt-auto" onClick={() => start(k, diff, false)}><Puzzle size={20} aria-hidden="true" /> Play · {diff}</button></article>); })}
+              {Object.entries(GAMES).map(([k, g], i) => { const I = ICON[k]; return (
+                <Reveal as="article" lift delay={(i % 3) * 70} key={k} className="card flex flex-col gap-3"><div className="flex items-center gap-3"><span className="grid h-12 w-12 place-items-center rounded-xl bg-primary-light text-primary-dark"><I size={26} aria-hidden="true" /></span><h3>{g.name}</h3></div>
+                  <p className="text-muted">{g.desc}</p><button className="btn-primary mt-auto" onClick={() => start(k, diff, false)}><Puzzle size={20} aria-hidden="true" /> Play · {diff}</button></Reveal>); })}
             </div>
           </section>
           <div className="grid gap-6 lg:grid-cols-2">

@@ -40,7 +40,7 @@ export default function Reports() {
         { key: 'status', label: 'Medical Status', options: [{ value: '', label: 'Any status' }, { value: 'NORMAL', label: 'Normal' }, { value: 'WARNING', label: 'Warning' }, { value: 'CRITICAL', label: 'Critical' }] },
         { key: 'risk', label: 'Risk Level (score)', options: [{ value: '', label: 'Any' }, { value: 'low', label: 'Low (0–33)' }, { value: 'mid', label: 'Moderate (34–66)' }, { value: 'high', label: 'High (67–100)' }] },
         { key: 'from', label: 'From date', type: 'date' }, { key: 'to', label: 'To date', type: 'date' }]} />
-      <div className="card mt-5">
+      <div className="card reveal mt-5">
         {error ? <ErrorState error={error} onRetry={reload} /> : loading ? <p role="status" className="text-muted">Loading reports…</p> : <DataTable columns={cols} rows={rows} />}
       </div>
     </>

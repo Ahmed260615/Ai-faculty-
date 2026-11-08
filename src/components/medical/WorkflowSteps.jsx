@@ -12,7 +12,7 @@ export default function WorkflowSteps({ phase }) {
         const done = i < cur || (i === cur && cur === 3), now = i === cur && !done;
         return (
           <li key={s} aria-current={now ? 'step' : undefined} className={`flex min-h-[3rem] items-center gap-3 ${now ? 'text-ink' : done ? 'text-ok-dark' : 'text-muted'}`}>
-            <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border font-mono text-sm font-semibold ${done ? 'border-ok bg-ok-bg' : now ? (failed ? 'border-crit-dark bg-crit-bg text-crit-dark' : 'border-sidebar bg-sidebar text-white') : 'border-line'}`}>
+            <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-colors duration-300 font-mono text-sm font-semibold ${done ? 'border-ok bg-ok-bg' : now ? (failed ? 'border-crit-dark bg-crit-bg text-crit-dark' : 'border-primary bg-primary text-black') : 'border-line'}`}>
               {done ? <Check size={16} aria-hidden="true" /> : String(i + 1).padStart(2, '0')}
             </span>
             <span className={`font-semibold ${now ? '' : 'font-medium'}`}>{s}{now && failed ? ' — attention' : ''}</span>

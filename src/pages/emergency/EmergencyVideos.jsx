@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react';
 import { Play, Search, Clock, HeartPulse, Wind, Bandage, Stethoscope, BriefcaseMedical, ShieldCheck } from 'lucide-react';
 import PageHeader from '../../components/ui/PageHeader';
 import DemoBadge from '../../components/ui/DemoBadge';
+import Photo from '../../components/ui/Photo';
+import Reveal from '../../components/ui/Reveal';
 import EmptyState from '../../components/ui/EmptyState';
 import ConfirmationDialog from '../../components/ui/ConfirmationDialog';
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -11,20 +13,18 @@ import { EMERGENCY_TABS } from './EmergencyTests';
 const CAT_ICON = { 'Cardiac Emergencies': HeartPulse, 'Respiratory Emergencies': Wind, 'Injuries and Trauma': Bandage, 'Medical Emergencies': Stethoscope, 'First Aid': BriefcaseMedical, 'Preventive Procedures': ShieldCheck };
 
 function Thumb({ video, large }) {
-  const Icon = CAT_ICON[video.category];
   return (
-    <div className={`relative grid place-items-center overflow-hidden ${large ? 'aspect-video rounded-xl' : 'aspect-video'}`} style={{ background: `linear-gradient(135deg, hsl(${video.hue} 35% 32%), hsl(${video.hue} 30% 20%))` }} aria-hidden="true">
-      <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 20% 20%, #fff 1px, transparent 1px)', backgroundSize: '22px 22px' }} />
-      <Icon size={large ? 72 : 52} className="text-white/90" />
-      <span className="absolute left-2 top-2 rounded bg-white/90 px-2 py-0.5 text-sm font-bold text-ink">DEMO THUMBNAIL</span>
-      <span className="absolute bottom-2 right-2 rounded bg-black/70 px-2 py-0.5 font-mono text-sm text-white">{video.duration}</span>
-    </div>
+    <Photo name={video.photo} ratio="aspect-video" caption={false} className={large ? 'rounded-xl' : ''}>
+      <span className="absolute left-2 top-2 z-10 rounded bg-black/70 px-2 py-0.5 text-sm font-bold text-white">DEMO VIDEO</span>
+      <span className="absolute inset-0 z-10 grid place-items-center" aria-hidden="true"><span className="grid h-16 w-16 place-items-center rounded-full border border-white/30 bg-black/45 text-white backdrop-blur-md"><Play size={28} fill="currentColor" /></span></span>
+      <span className="absolute bottom-2 right-2 z-10 rounded bg-black/75 px-2 py-0.5 font-mono text-sm text-white">{video.duration}</span>
+    </Photo>
   );
 }
 
-function Card({ video, onWatch }) {
+function Card({ video, onWatch, i = 0 }) {
   return (
-    <article className="card !p-0 flex flex-col overflow-hidden">
+    <Reveal as="article" lift delay={(i % 4) * 60} className="card !p-0 flex flex-col overflow-hidden">
       <Thumb video={video} />
       <div className="flex flex-1 flex-col gap-2 p-4">
         <p className="text-sm font-bold uppercase tracking-wide text-primary-dark">{video.category}</p>
@@ -33,7 +33,7 @@ function Card({ video, onWatch }) {
         <p className="flex items-center gap-1.5 text-muted"><Clock size={18} aria-hidden="true" /> {video.duration}</p>
         <button type="button" className="btn-primary mt-auto" onClick={() => onWatch(video)}><Play size={20} aria-hidden="true" /> Watch Video</button>
       </div>
-    </article>
+    </Reveal>
   );
 }
 
@@ -69,7 +69,7 @@ export default function EmergencyVideos() {
         </>)}
 
       <section aria-labelledby="all"><h2 id="all" className="mb-4">{cat || 'All Videos'} <span className="text-muted">({list.length})</span></h2>
-        {list.length ? <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">{list.map((x) => <Card key={x.id} video={x} onWatch={watch} />)}</div>
+        {list.length ? <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">{list.map((x, i) => <Card key={x.id} i={i} video={x} onWatch={watch} />)}</div>
           : <div className="card"><EmptyState title="No videos found">Try another search term or category.</EmptyState></div>}
       </section>
 
